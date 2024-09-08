@@ -1,3 +1,14 @@
+#print("hello world")
 print("hello")
-print("world")
+print('world')
 print(print("hello"))
+print(print('world'))
+print()
+print(None)
+if False:
+    print(True)
+for i in "hello world":
+    print(i)
+
+p = 1
+pass

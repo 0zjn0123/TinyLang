@@ -25,22 +25,22 @@ def detect_keywords(code):
     return keywords
 
 def extract_function_calls(code):
-    # 正则表达式模式，用于匹配函数调用
-    function_call_pattern = r"(\w+)\s*\(([^)]*)\)"
-
-    # 查找所有匹配的函数调用
-    matches = re.findall(function_call_pattern, code)
-
-    # 解析并提取函数名称和参数
-    function_calls = []
-    for match in matches:
-        function_name = match[0]
-        params = match[1].strip()
-
-        # 如果参数为空，则设置为空字符串
-        if not params:
-            params = ''
-
-        function_calls.append((function_name, params))
-
-    return function_calls
+    """
+    从给定的代码字符串中提取所有的函数调用。
+    
+    参数:
+    - code (str): 包含源代码的字符串。
+    
+    返回:
+    - list of lists: 每个列表包含两个元素，第一个元素是函数名称，第二个元素是传入该函数的参数字符串。
+    """
+    # 正则表达式模式，用于匹配形如 'function_name(param1, param2)' 的字符串
+    # 使用递归模式来处理嵌套的函数调用
+    pattern = r'(\w+)\s*\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*'
+    # 查找所有符合模式的函数调用，并将它们作为列表返回
+    matches = re.findall(pattern, code)
+    
+    # 将元组转换为列表
+    results = [[function_name, parameters] for function_name, parameters in matches]
+    
+    return results
