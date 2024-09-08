@@ -48,7 +48,11 @@ def runcode(code):
         if funlist.get(function_calls[0][0], False):
             # 执行对应的函数，并传入函数调用的参数
             exec(funlist[function_calls[0][0]]+"("+function_calls[0][1]+")")
-    
+            # 递归处理嵌套函数调用
+        for func_name, args in function_calls:
+            if func_name in funlist:
+                # 递归调用 runcode 处理嵌套函数调用
+                runcode(func_name + "(" + args + ")")
     kwdetected = detect_keywords(code_lstrip)
     # 处理嵌套代码
     if "if" in code_lstrip or "while" in code_lstrip or "for" in code_lstrip:
